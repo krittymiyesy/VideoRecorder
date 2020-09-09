@@ -1,10 +1,4 @@
 
-/**
- * Ò¶º£»Ô
- * QQÈº121376426
- * http://blog.yundiantech.com/
- */
-
 #ifndef SCREENRECORDER_H
 #define SCREENRECORDER_H
 

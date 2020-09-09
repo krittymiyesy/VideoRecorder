@@ -1,10 +1,4 @@
 
-/**
- * Ò¶º£»Ô
- * QQÈº121376426
- * http://blog.yundiantech.com/
- */
-
 #include "getvideothread.h"
 
 #include <QTimer>

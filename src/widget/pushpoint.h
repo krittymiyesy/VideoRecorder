@@ -1,10 +1,4 @@
 
-/**
- * 叶海辉
- * QQ群121376426
- * http://blog.yundiantech.com/
- */
-
 #ifndef PUSHPOINT_H
 #define PUSHPOINT_H
 

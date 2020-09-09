@@ -1,10 +1,4 @@
 
-/**
- * Ò¶º£»Ô
- * QQÈº121376426
- * http://blog.yundiantech.com/
- */
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -740,4 +734,3 @@ void MainWindow::slotCheckBoxClick(bool checked)
         selectRectWidget->setRate(-1);
     }
 }
-

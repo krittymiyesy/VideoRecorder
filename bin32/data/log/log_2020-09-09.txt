@@ -1,0 +1,45 @@
+[2020-09-09 18:13:48] 
+=======================================
+=======================================
+[App Start...]
+
+ 
+[2020-09-09 18:13:57] !!!!!!!!!! Error encoding audio frame: Resource temporarily unavailable ret=-11 
+[2020-09-09 18:14:07] !!!!!!!!!! av_write_trailer ... D:/Github/VideoRecorder/bin32/data/movie/video_2020-09-09 181355.mp4 
+[2020-09-09 18:14:07] !!!!!!!!!! av_write_trailer finised! D:/Github/VideoRecorder/bin32/data/movie/video_2020-09-09 181355.mp4 
+[2020-09-09 18:16:32] 
+=======================================
+=======================================
+[App Start...]
+
+ 
+[2020-09-09 18:18:05] 
+=======================================
+=======================================
+[App Start...]
+
+ 
+[2020-09-09 18:23:03] 
+=======================================
+=======================================
+[App Start...]
+
+ 
+[2020-09-09 18:23:40] 
+=======================================
+=======================================
+[App Start...]
+
+ 
+[2020-09-09 18:24:29] !!!!!!!!!! Error encoding audio frame: Resource temporarily unavailable ret=-11 
+[2020-09-09 18:24:47] !!!!!!!!!! av_write_trailer ... D:\\Github\\VideoRecorder\\bin32\\data\\movie/video_2020-09-09 182428.mp4 
+[2020-09-09 18:24:47] !!!!!!!!!! av_write_trailer finised! D:\\Github\\VideoRecorder\\bin32\\data\\movie/video_2020-09-09 182428.mp4 
+[2020-09-09 18:54:47] 
+=======================================
+=======================================
+[App Start...]
+
+ 
+[2020-09-09 18:54:58] !!!!!!!!!! Error encoding audio frame: Resource temporarily unavailable ret=-11 
+[2020-09-09 18:55:11] !!!!!!!!!! av_write_trailer ... D:\\Github\\VideoRecorder\\bin32\\data\\movie/video_2020-09-09 185457.mp4 
+[2020-09-09 18:55:11] !!!!!!!!!! av_write_trailer finised! D:\\Github\\VideoRecorder\\bin32\\data\\movie/video_2020-09-09 185457.mp4 

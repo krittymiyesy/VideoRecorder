@@ -1,10 +1,4 @@
 
-/**
- * Ò¶º£»Ô
- * QQÈº121376426
- * http://blog.yundiantech.com/
- */
-
 #include "screenrecorder.h"
 
 #include "AppConfig.h"
