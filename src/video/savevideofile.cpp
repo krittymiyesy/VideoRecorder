@@ -972,8 +972,8 @@ while(1)
      * video codecs and allocate the necessary encode buffers. */
     if (have_video){
         open_video(oc, video_codec, &video_st);
-
-    //if (have_audio)   //如果需要控制音频的话，再放开此处，默认音频视频同步录制
+    }
+    if (have_audio){   //如果需要控制音频的话，再放开此处，默认音频视频同步录制
         open_audio(oc, audio_codec, &audio_st);
     }
     av_dump_format(oc, 0, filename, 1);

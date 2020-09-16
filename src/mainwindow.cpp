@@ -357,7 +357,7 @@ void MainWindow::initDev()
                 }
                 else if (isAudioBegin)
                 {
-                    if ("virtual-audio-capturer" != str)
+                    //if ("virtual-audio-capturer" != str)
                         ui->comboBox_audio->addItem(str);
                 }
             }
@@ -371,7 +371,7 @@ void MainWindow::initDev()
         qDebug()<<"open a.txt failed!";
     }
 
-    QFile::remove("a.txt");
+    //QFile::remove("a.txt");
 
     for (int i=0;i<ui->comboBox_audio->count();i++)
     {

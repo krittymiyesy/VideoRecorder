@@ -1,10 +1,4 @@
 
-/**
- * 叶海辉
- * QQ群121376426
- * http://blog.yundiantech.com/
- */
-
 #include "pushpoint.h"
 
 PushPoint::PushPoint(QWidget *parent)

@@ -65,8 +65,8 @@ GetVideoThread::GetVideoThread()
     audio_buf_size_L = 0;
     audio_buf_size_R = 0;
 
-    connect(this,SIGNAL(withChanged(int,int)),this,SLOT(slotWithChanged(int,int)),Qt::BlockingQueuedConnection);
-    connect(this,SIGNAL(loading(bool)),this,SLOT(slotLoading(bool)),Qt::BlockingQueuedConnection);
+    //connect(this,SIGNAL(withChanged(int,int)),this,SLOT(slotWithChanged(int,int)),Qt::BlockingQueuedConnection);
+    //connect(this,SIGNAL(loading(bool)),this,SLOT(slotLoading(bool)),Qt::BlockingQueuedConnection);
 
 }
 
