@@ -4,45 +4,6 @@
 #include <QFileInfo>
 #include <QDir>
 
-//double videoPts = 0.0;
-//static void log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt)
-//{
-//    AVRational *time_base = &fmt_ctx->streams[pkt->stream_index]->time_base;
-
-//char buf[AV_TS_MAX_STRING_SIZE];
-//av_ts_make_time_string(buf, pkt->dts, time_base);
-
-//char buf1[AV_TS_MAX_STRING_SIZE];
-//av_ts_make_time_string(buf1, pkt->pts, time_base);
-
-//char buf2[AV_TS_MAX_STRING_SIZE];
-//av_ts_make_time_string(buf2, pkt->duration, time_base);
-//videoPts = pkt->pts;
-//qDebug()<<pkt->pts<<pkt->dts<<buf<<buf1<<buf2;
-
-////    printf("pts:%s pts_time:%s dts:%s dts_time:%s duration:%s duration_time:%s stream_index:%d\n",
-////           av_ts2str(pkt->pts), av_ts2timestr(pkt->pts, time_base),
-////           av_ts2str(pkt->dts), av_ts2timestr(pkt->dts, time_base),
-////           av_ts2str(pkt->duration), av_ts2timestr(pkt->duration, time_base),
-////           pkt->stream_index);
-//}
-
-//static int write_frame(AVFormatContext *fmt_ctx, const AVRational *time_base, AVStream *st, AVPacket *pkt, bool isAudio)
-//{
-//    /* rescale output packet timestamp values from codec to stream timebase */
-//    av_packet_rescale_ts(pkt, *time_base, st->time_base);
-//    pkt->stream_index = st->index;
-
-//    if (!isAudio)
-//    {
-//        log_packet(fmt_ctx, pkt);
-//    }
-
-//    /* Write the compressed frame to the media file. */
-
-//    return av_interleaved_write_frame(fmt_ctx, pkt);
-//}
-
 /**
 *  Add ADTS header at the beginning of each and every AAC packet.
 *  This is needed as MediaCodec encoder generates a packet of raw
@@ -104,6 +65,7 @@ SaveVideoFileThread::SaveVideoFileThread()
     audio_pts = 0;
     video_pts = 0;
 
+    mONEFrameSize = 4096;
 }
 
 SaveVideoFileThread::~SaveVideoFileThread()
@@ -138,15 +100,13 @@ void SaveVideoFileThread::setQuantity(int value)
 
 void SaveVideoFileThread::videoDataQuene_Input(uint8_t * buffer, int size, int64_t time)
 {
-//    qDebug()<<"void SaveVideoFileThread::videoDataQuene_Input(uint8_t * buffer,int size,long time)"<<time;
+//  qDebug()<<"void SaveVideoFileThread::videoDataQuene_Input(uint8_t * buffer,int size,long time)"<<time;
     BufferDataNode * node = (BufferDataNode*)malloc(sizeof(BufferDataNode));
     node->bufferSize = size;
     node->next = NULL;
     node->time = time;
 
     node->buffer = buffer;
-//    node->buffer = (uint8_t *)malloc(size);
-//    memcpy(node->buffer,buffer,size);
 
     mVideoMutex.lock();
 
@@ -164,7 +124,7 @@ void SaveVideoFileThread::videoDataQuene_Input(uint8_t * buffer, int size, int64
     videoBufferCount++;
 
     mVideoMutex.unlock();
-//qDebug()<<__FUNCTION__<<videoBufferCount<<time;
+//  qDebug()<<__FUNCTION__<<videoBufferCount<<time;
     if (videoBufferCount >= 30)
     {
         QString logStr = QString("!!!!!!!!!! encode too slow! count=%1")
@@ -184,7 +144,7 @@ BufferDataNode *SaveVideoFileThread::videoDataQuene_get(int64_t time)
     {
         node = videoDataQueneHead;
 
-//qDebug()<<"111:"<<time<<node->time<<videoBufferCount;
+//  qDebug()<<"111:"<<time<<node->time<<videoBufferCount;
         if (time >= node->time)
         {
 //            qDebug()<<"000";
@@ -200,14 +160,14 @@ BufferDataNode *SaveVideoFileThread::videoDataQuene_get(int64_t time)
                         node = NULL;
                         break;
                     }
-//qDebug()<<"333"<<time << node->next->time;
+//  qDebug()<<"333"<<time << node->next->time;
                     if (time < node->next->time)
                     {
                         break;
                     }
 
                     BufferDataNode * tmp = node;
-//qDebug()<<"222:"<<node->time<<time;
+//  qDebug()<<"222:"<<node->time<<time;
                     node = node->next;
                     videoBufferCount--;
                     free(tmp->buffer);
@@ -245,19 +205,14 @@ BufferDataNode *SaveVideoFileThread::videoDataQuene_get(int64_t time)
 void SaveVideoFileThread::audioDataQuene_Input(const uint8_t *buffer, const int &size)
 {
     BufferDataNode  node;
-//    node->buffer = buffer;
     node.bufferSize = size;
     node.next = NULL;
 
     node.buffer = (uint8_t*)buffer;
-//    node->buffer = (uint8_t *)malloc(size);
-//    memcpy(node->buffer,buffer,size);
 
     mAudioMutex.lock();
-
     mAudioDataList.append(node);
-
-//qDebug()<<__FUNCTION__<<audioBufferCount<<size;
+//  qDebug()<<__FUNCTION__<<audioBufferCount<<size;
     mAudioMutex.unlock();
 
 }
@@ -317,8 +272,8 @@ void SaveVideoFileThread::add_audio_stream(OutputStream *ost, AVFormatContext *o
         exit(1);
     }
 
-    ///先用这句话找出 aac编码器支持的 sample_fmt
-    /// 我找出的是 AV_SAMPLE_FMT_FLTP
+    //先用这句话找出 aac编码器支持的 sample_fmt
+    //找出的是 AV_SAMPLE_FMT_FLTP
     const enum AVSampleFormat *p = aCodec->sample_fmts;
     fprintf(stderr, "aac encoder sample format is: %s \n",av_get_sample_fmt_name(*p));
 
@@ -329,38 +284,6 @@ void SaveVideoFileThread::add_audio_stream(OutputStream *ost, AVFormatContext *o
     aCodecCtx->sample_rate= 44100;
     aCodecCtx->channels = 2;
     aCodecCtx->channel_layout=av_get_default_channel_layout(aCodecCtx->channels);
-
-//    aCodecCtx->channels       = av_get_channel_layout_nb_channels(aCodecCtx->channel_layout);
-//    aCodecCtx->channel_layout = AV_CH_LAYOUT_STEREO;
-
-//    aCodecCtx->profile=FF_PROFILE_AAC_LOW; //（可参考AAC格式简介）
-//    aCodecCtx->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
-
-//    aCodecCtx->bit_rate = 64000;
-
-#if 0
-    if ((*codec)->supported_samplerates)
-    {
-        aCodecCtx->sample_rate = (*codec)->supported_samplerates[0];
-
-        for (i = 0; (*codec)->supported_samplerates[i]; i++)
-        {
-            if ((*codec)->supported_samplerates[i] == 44100)
-                aCodecCtx->sample_rate = 44100;
-        }
-    }
-
-    if ((*codec)->channel_layouts)
-    {
-        aCodecCtx->channel_layout = (*codec)->channel_layouts[0];
-        for (i = 0; (*codec)->channel_layouts[i]; i++)
-        {
-            if ((*codec)->channel_layouts[i] == AV_CH_LAYOUT_STEREO)
-                aCodecCtx->channel_layout = AV_CH_LAYOUT_STEREO;
-        }
-    }
-    aCodecCtx->channels        = av_get_channel_layout_nb_channels(aCodecCtx->channel_layout);
-#endif
 
     ost->st->time_base.num = 1; // = (AVRational){ 1, c->sample_rate };
     ost->st->time_base.den = aCodecCtx->sample_rate;
@@ -379,7 +302,7 @@ void SaveVideoFileThread::open_audio(AVFormatContext *oc, AVCodec *codec, Output
     }
 
     mONEFrameSize = av_samples_get_buffer_size(NULL, aCodecCtx->channels, aCodecCtx->frame_size, aCodecCtx->sample_fmt, 1);
-
+    qDebug()<<"++++++++++++++++++++++++"<<"mONEFrameSize:"<<mONEFrameSize<<"aCodecCtx->channels: "<<aCodecCtx->channels<<"aCodecCtx->frame_size: "<<aCodecCtx->frame_size<<"aCodecCtx->sample_fmt:"<<aCodecCtx->sample_fmt;
     ost->frame           = av_frame_alloc();
     ost->frameBuffer     = (uint8_t *)av_malloc(mONEFrameSize);
     ost->frameBufferSize = mONEFrameSize;
@@ -473,20 +396,9 @@ bool SaveVideoFileThread::write_audio_frame(AVFormatContext *oc, OutputStream *o
             return false;
         }
 
-#if 0 ///写入aac文件
-        uint8_t * aac_buf = (uint8_t *)malloc(packet->size+7);
-        addADTStoPacket(aac_buf, 7+packet->size);
-        memcpy(aac_buf+7, packet->data, packet->size);
-        static FILE *aacFp = fopen("out22.aac", "wb");
-        fwrite(aac_buf,1,packet->size+7,aacFp);
-#endif
-
-        ////
         /* rescale output packet timestamp values from codec to stream timebase */
         av_packet_rescale_ts(&pkt, aCodecCtx->time_base, ost->st->time_base);
         pkt.stream_index = ost->st->index;
-
-//        audio_pts = pkt.pts;
 
         ///由于MP4文件的时间基不是1/1000，因此这里转成毫秒的形式，方便显示和计算。
         ///将Pts转换成毫秒的形式，这里pts仅仅用于显示，不会修改写入文件的pts
@@ -568,9 +480,6 @@ qDebug()<<__FUNCTION__<<c<<c->codec<<c->codec_id<<codec_id;
        of which frame timestamps are represented. for fixed-fps content,
        timebase should be 1/framerate and timestamp increments should be
        identically 1. */
-//    c->time_base.den = m_videoFrameRate;
-//    c->time_base.num = 1;
-//    c->gop_size = 12; /* emit one intra frame every twelve frames at most */
     c->gop_size = m_videoFrameRate;
     c->pix_fmt = AV_PIX_FMT_YUV420P;
 
@@ -599,28 +508,6 @@ qDebug()<<__FUNCTION__<<c<<c->codec<<c->codec_id<<codec_id;
 //    av_opt_set(c->priv_data, "qp", "31.000",AV_OPT_SEARCH_CHILDREN);
 #endif
 
-#if TEST_OPT
-
-    av_opt_set(pCodecCtx,"b","400000",0);		//bitrate
-    //Another method
-    //av_opt_set_int(pCodecCtx,"b",400000,0);	//bitrate
-
-    av_opt_set(pCodecCtx,"time_base","1/25",0);	//time_base
-    av_opt_set(pCodecCtx,"bf","5",0);			//max b frame
-    av_opt_set(pCodecCtx,"g","25",0);			//gop
-    av_opt_set(pCodecCtx,"qmin","10",0);		//qmin/qmax
-    av_opt_set(pCodecCtx,"qmax","51",0);
-
-#else
-
-//    pCodecCtx->time_base.num = 1;
-//    pCodecCtx->time_base.den = 25;
-//    pCodecCtx->max_b_frames=5;
-//    pCodecCtx->bit_rate = 400000;
-//    pCodecCtx->gop_size=25;
-//    pCodecCtx->qmin = 10;
-//    pCodecCtx->qmax = 51;
-
     /* time base: this is the fundamental unit of time (in seconds) in terms
        of which frame timestamps are represented. for fixed-fps content,
        timebase should be 1/framerate and timestamp increments should be
@@ -634,29 +521,26 @@ qDebug()<<__FUNCTION__<<c<<c->codec<<c->codec_id<<codec_id;
 //    c->bit_rate_tolerance = mBitRate;
 
 //    //H264 还可以设置很多参数 自行研究吧
-////    pCodecCtx->me_range = 16;
-////    pCodecCtx->max_qdiff = 1;
+//    pCodecCtx->me_range = 16;
+//    pCodecCtx->max_qdiff = 1;
 //    c->qcompress = 0.85;
     c->qmin = 16;
     c->qmax = 31;
 
-////    //采用（qmin/qmax的比值来控制码率，1表示局部采用此方法，0表示全局）
-////    c->rc_qsquish = 0;
+//    //采用（qmin/qmax的比值来控制码率，1表示局部采用此方法，0表示全局）
+//    c->rc_qsquish = 0;
 
-////    //因为我们的量化系数q是在qmin和qmax之间浮动的，
-////    //qblur表示这种浮动变化的变化程度，取值范围0.0～1.0，取0表示不削减
-////    c->qblur = 1.0;
+//    //因为我们的量化系数q是在qmin和qmax之间浮动的，
+//    //qblur表示这种浮动变化的变化程度，取值范围0.0～1.0，取0表示不削减
+//    c->qblur = 1.0;
 
 //std::cout<<"mBitRate"<<mBitRate<<m_videoFrameRate;
 
-////    ///b_frame_strategy
-////    ///如果为true，则自动决定什么时候需要插入B帧，最高达到设置的最大B帧数。
-////    ///如果设置为false,那么最大的B帧数被使用。
-////    c->b_frame_strategy = 1;
-////    c->max_b_frames = 5;
-
-#endif
-
+//    ///b_frame_strategy
+//    ///如果为true，则自动决定什么时候需要插入B帧，最高达到设置的最大B帧数。
+//    ///如果设置为false,那么最大的B帧数被使用。
+//    c->b_frame_strategy = 1;
+//    c->max_b_frames = 5;
 
     if (c->codec_id == AV_CODEC_ID_MPEG2VIDEO) {
         /* just for testing, we also add B frames */
@@ -733,20 +617,7 @@ qDebug()<<__FUNCTION__<<"333"<<c->pix_fmt<<AV_PIX_FMT_YUV420P;
 
         ost->frameBuffer = out_buffer_yuv;
         ost->frameBufferSize = numBytes_yuv;
-
-//        /* allocate the buffers for the frame data */
-//        int ret = av_frame_get_buffer(ost->frame, 0);
-//        if (ret < 0) {
-//            fprintf(stderr, "Could not allocate frame data.\n");
-//            exit(1);
-//        }
-
     }
-//    ost->frame = alloc_picture(c->pix_fmt, c->width, c->height);
-//    if (!ost->frame) {
-//        fprintf(stderr, "Could not allocate picture\n");
-//        exit(1);
-//    }
 
     /* If the output format is not YUV420P, then a temporary YUV420P
      * picture is needed too. It is then converted to the required
@@ -798,23 +669,12 @@ bool SaveVideoFileThread::write_video_frame(AVFormatContext *oc, OutputStream *o
         }
 
         memcpy(ost->frameBuffer, node->buffer, node->bufferSize);
-
-//不知为何下面这两种方式都不行
-//        int y_size = c->width * c->height;
-//        memcpy(ost->frame->data[0], node->buffer, y_size * 3 / 2);
-
-//        memcpy(ost->frame->data[0], node->buffer, y_size);
-//        memcpy(ost->frame->data[1], node->buffer+ y_size, y_size*5/4);
-//        memcpy(ost->frame->data[2], node->buffer+ y_size*5/4, y_size*5/4);
-//qDebug()<<__FUNCTION__<<"000 1111";
-
         ost->frame->pts = ost->next_pts++;
 
     }
 //qDebug()<<__FUNCTION__<<"1111";
 
     AVPacket pkt = { 0 };
-//    av_init_packet(&pkt);
 
     /* encode the image */
     out_size = avcodec_encode_video2(c, &pkt, ost->frame, &got_packet);
@@ -827,10 +687,8 @@ bool SaveVideoFileThread::write_video_frame(AVFormatContext *oc, OutputStream *o
         pkt.stream_index = ost->st->index;
 //qDebug()<<__FUNCTION__<<"222"<<ost->frame->pts<<pkt.pts<<time<<node->time;
 
-//        video_pts = pkt.pts;
-
-        ///由于MP4文件的时间基不是1/1000，因此这里转成毫秒的形式，方便显示和计算。
-        ///将Pts转换成毫秒的形式，这里pts仅仅用于显示，不会修改写入文件的pts
+        //由于MP4文件的时间基不是1/1000，因此这里转成毫秒的形式，方便显示和计算。
+        //将Pts转换成毫秒的形式，这里pts仅仅用于显示，不会修改写入文件的pts
         video_pts = av_rescale_q(pkt.pts, ost->st->time_base, {1, 1000});
 
         /* Write the compressed frame to the media file. */
@@ -973,7 +831,7 @@ while(1)
     if (have_video){
         open_video(oc, video_codec, &video_st);
     }
-    if (have_audio){   //如果需要控制音频的话，再放开此处，默认音频视频同步录制
+    if (have_audio){
         open_audio(oc, audio_codec, &audio_st);
     }
     av_dump_format(oc, 0, filename, 1);
@@ -997,7 +855,6 @@ while(1)
     }
 
     /* write the stream header, if any */
-//    av_write_header(oc);
     avformat_write_header(oc, NULL);
 
     video_pts = 0;

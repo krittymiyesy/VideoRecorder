@@ -1,0 +1,56 @@
+
+10:51:03: Starting D:\Github\VideoRecorder\bin32\VideoRecorder.exe ...
+"D:/Github/VideoRecorder/bin32"
+AppConfig::WriteLog "\r\n=======================================\r\n=======================================\r\n[App Start...]\r\n\r\n"
+Device Info=============
+========================
+Device Info=============
+========================
+[dshow @ 00b98500] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 00b98500]  "Integrated Webcam"
+[dshow @ 00b98500]     Alternative name "@device_pnp_\\?\usb#vid_0bda&pid_565c&mi_00#6&a611cca&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+[dshow @ 00b98500]  "screen-capture-recorder"
+[dshow @ 00b98500]     Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{4EA6930A-2C8A-4AE6-A561-56E4B5044439}"
+[dshow @ 00b98500] DirectShow audio devices
+[dshow @ 00b98500]  "楹﹀厠椋(HUAWEI USB-C HEADSET)"
+[dshow @ 00b98500]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{0A9DAF85-AC37-4791-B115-1D511DBD42B4}"
+[dshow @ 00b98500]  "virtual-audio-capturer"
+[dshow @ 00b98500]     Alternative name "@device_sw_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\{8E14549B-DB61-4309-AFA1-3578E927E935}"
+[dshow @ 00b98500]  "楹﹀厠椋庨樀鍒(Realtek(R) Audio)"
+[dshow @ 00b98500]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{3355F654-B853-4B24-877F-8A2565C5A87F}"
+[dshow @ 00b9ce80] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 00b9ce80]  "Integrated Webcam"
+[dshow @ 00b9ce80]     Alternative name "@device_pnp_\\?\usb#vid_0bda&pid_565c&mi_00#6&a611cca&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+[dshow @ 00b9ce80]  "screen-capture-recorder"
+[dshow @ 00b9ce80]     Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{4EA6930A-2C8A-4AE6-A561-56E4B5044439}"
+[dshow @ 00b9ce80] DirectShow audio devices
+[dshow @ 00b9ce80]  "楹﹀厠椋(HUAWEI USB-C HEADSET)"
+[dshow @ 00b9ce80]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{0A9DAF85-AC37-4791-B115-1D511DBD42B4}"
+[dshow @ 00b9ce80]  "virtual-audio-capturer"
+[dshow @ 00b9ce80]     Alternative name "@device_sw_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\{8E14549B-DB61-4309-AFA1-3578E927E935}"
+[dshow @ 00b9ce80]  "楹﹀厠椋庨樀鍒(Realtek(R) Audio)"
+[dshow @ 00b9ce80]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{3355F654-B853-4B24-877F-8A2565C5A87F}"
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 00b98audio info:
+audio info: 1536000 1 1536000 48000 2
+27
+SaveVideoFileThread::add_video_stream 0xbe2600 0x24ebb00 27 27
+333
+SaveVideoFileThread::open_video 333
+SaveVideoFileThread::open_video 333 0 0
+aac encoder sample format is: fltp 
+D:\SogouInput\Components\
+10:51:18: 程序异常结束。
+10:51:18: The process was ended forcefully.
+10:51:18: D:/Github/VideoRecorder/bin32/VideoRecorder.exe crashed.

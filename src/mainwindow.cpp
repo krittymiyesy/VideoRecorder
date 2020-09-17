@@ -574,7 +574,7 @@ bool MainWindow::startRecord()
         {
             if (m_screenRecorder->init("",false,audioDevName,true) == SUCCEED)
             {
-//                    qDebug()<<rect;
+                //qDebug()<<rect;
                 m_screenRecorder->setPicRange(rect.x(),rect.y(),rect.width(),rect.height());
                 m_screenRecorder->startRecord();
             }

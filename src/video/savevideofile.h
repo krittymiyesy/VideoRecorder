@@ -40,14 +40,14 @@ typedef struct OutputStream
     AVFrame *frame;
     AVFrame *tmp_frame;
 
-    /// 如果是视频这是yuv420p数据
-    /// 如果是音频这是存放pcm数据，用来取出刚好的一帧数据传给编码器编码
+    // 如果是视频这是yuv420p数据
+    // 如果是音频这是存放pcm数据，用来取出刚好的一帧数据传给编码器编码
     uint8_t *frameBuffer;
     int frameBufferSize;
 
 } OutputStream;
 
-struct BufferDataNode
+struct BufferDataNode   //每一个缓存数据节点。类链表指向下一个缓存数据节点，用时间戳进行校准
 {
     uint8_t * buffer;
     int bufferSize;
@@ -70,7 +70,7 @@ public:
     bool startEncode();
     bool stopEncode();
 
-    ///time是毫秒
+    //time代表毫秒
     void videoDataQuene_Input(uint8_t * buffer, int size, int64_t time);
     BufferDataNode *videoDataQuene_get(int64_t time);
 

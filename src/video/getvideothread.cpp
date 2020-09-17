@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QDebug>
 
+//按照实际的录屏区域，裁剪yuv数据
 void Yuv420Cut(int x,int y,int desW,int desH,int srcW,int srcH,uint8_t *srcBuffer,uint8_t *desBuffer)
 {
     int tmpRange;
@@ -64,10 +65,6 @@ GetVideoThread::GetVideoThread()
 
     audio_buf_size_L = 0;
     audio_buf_size_R = 0;
-
-    //connect(this,SIGNAL(withChanged(int,int)),this,SLOT(slotWithChanged(int,int)),Qt::BlockingQueuedConnection);
-    //connect(this,SIGNAL(loading(bool)),this,SLOT(slotLoading(bool)),Qt::BlockingQueuedConnection);
-
 }
 
 
@@ -217,15 +214,12 @@ ErroCode GetVideoThread::init(QString videoDevName, bool useVideo, QString audio
 
         //输出的采样率
         out_sample_rate = 44100;
+        //out_sample_rate = 48000;
         //输出的声道布局
 
         //输出的声道布局
         out_ch_layout = AV_CH_LAYOUT_STEREO;
         audio_tgt_channels = av_get_channel_layout_nb_channels(out_ch_layout);
-
-//        //输出的声道布局
-//        out_ch_layout = av_get_default_channel_layout(audio_tgt_channels); ///AV_CH_LAYOUT_STEREO
-//        out_ch_layout &= ~AV_CH_LAYOUT_STEREO;
 
         if (in_ch_layout <= 0)
         {
@@ -292,12 +286,8 @@ void GetVideoThread::deInit()
     if (aCodecCtx)
         avcodec_close(aCodecCtx);
 
-//    avformat_flush(pFormatCtx);
-
     avformat_close_input(&pFormatCtx);
-
     avformat_free_context(pFormatCtx);
-
 }
 
 void GetVideoThread::startRecord()
@@ -348,38 +338,24 @@ void GetVideoThread::run()
 
     if (pCodecCtx)
     {
-
-        //-------------------------------------------------------------//
-
         int numBytes = avpicture_get_size(AV_PIX_FMT_YUV420P, pCodecCtx->width,pCodecCtx->height);
         out_buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
         avpicture_fill((AVPicture *) pFrameYUV, out_buffer, AV_PIX_FMT_YUV420P,pCodecCtx->width, pCodecCtx->height);
-
         img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height, AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
-        //------------------------------
 
         y_size = pCodecCtx->width * pCodecCtx->height;
         yuvSize = pic_w * pic_h;
         size = avpicture_get_size(pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height);
-
     }
 
     int ret, got_frame;
-
     AVPacket *packet=(AVPacket *)av_malloc(sizeof(AVPacket));
-//    //Output Information-----------------------------
-//    printf("File Information（文件信息）---------------------\n");
-//    av_dump_format(pFormatCtx,0,NULL,0);
-//    printf("-------------------------------------------------\n");
-
     qint64 firstTime = QDateTime::currentMSecsSinceEpoch();
-
     bool m_getFirst = false;
     qint64 timeIndex = 0;
 
     while(m_isRun )
     {
-
         if (av_read_frame(pFormatCtx, packet)<0)
         {
             qDebug()<<"read failed!";
@@ -434,8 +410,9 @@ void GetVideoThread::run()
                     memcpy(picture_buf+y_size+y_size/4,pFrameYUV->data[2],y_size/4);
 
                     uint8_t * yuv_buf = (uint8_t *)malloc(size);
-                    ///将YUV图像裁剪成目标大小
+                    //将YUV图像裁剪成目标大小
                     Yuv420Cut(pic_x,pic_y,pic_w,pic_h,pCodecCtx->width,pCodecCtx->height,picture_buf,yuv_buf);
+                    //然后保存目标大小的YUV图像
                     m_saveVideoFileThread->videoDataQuene_Input(yuv_buf,yuvSize*3/2,time);
 
                     av_free(picture_buf);
@@ -461,8 +438,6 @@ void GetVideoThread::run()
 
                     int nb_samples = av_rescale_rnd(swr_get_delay(swrCtx, out_sample_rate) + aFrame->nb_samples, out_sample_rate, in_sample_rate, AV_ROUND_UP);
 
-//                    av_samples_fill_arrays(aFrame_ReSample->data, aFrame_ReSample->linesize, audio_buf_resample, audio_tgt_channels, aFrame_ReSample->nb_samples, out_sample_fmt, 0);
-
                     aFrame_ReSample->format = out_sample_fmt;
                     aFrame_ReSample->channel_layout = out_ch_layout;
                     aFrame_ReSample->sample_rate = out_sample_rate;
@@ -479,7 +454,7 @@ void GetVideoThread::run()
 
                 int len2 = swr_convert(swrCtx, aFrame_ReSample->data, aFrame_ReSample->nb_samples, (const uint8_t**)aFrame->data, aFrame->nb_samples);
 
-///下面这两种方法计算的大小是一样的
+//下面这两种方法计算的大小是一样的
 #if 0
                 int resampled_data_size = len2 * audio_tgt_channels * av_get_bytes_per_sample(out_sample_fmt);
 #else
@@ -489,13 +464,6 @@ void GetVideoThread::run()
                 int OneChannelDataSize = resampled_data_size / audio_tgt_channels;
 
 //qDebug()<<"audio info:"<<aCodecCtx->bit_rate<<aCodecCtx->sample_fmt<<aCodecCtx->sample_rate<<aCodecCtx->channels<<audio_tgt_channels;
-//static FILE *fp1 = fopen("out-L.pcm", "wb");
-//fwrite(aFrame_ReSample->data[0], 1, resampled_data_size / 2, fp1);
-//if (audio_tgt_channels >= 2)
-//{
-//    static FILE *fp2 = fopen("out-R.pcm", "wb");
-//    fwrite(aFrame_ReSample->data[1], 1, resampled_data_size / 2, fp2);
-//}
                 if (m_saveVideoFileThread)
                 {
                     memcpy(audio_buf_L + audio_buf_size_L, aFrame_ReSample->data[0], OneChannelDataSize);
@@ -514,14 +482,15 @@ void GetVideoThread::run()
 
                     ONEAudioSize /= audio_tgt_channels;
 
-                    ///由于采集到的数据很大，而编码器一次只需要很少的数据。
-                    ///因此将采集到的数据分成多次传给编码器。
-                    /// 由于平面模式的pcm存储方式为：LLLLLLLLLLLLLLLLLLLLLRRRRRRRRRRRRRRRRRRRRR，因此这里合并完传给编码器就行了
+                    //由于采集到的数据很大，而编码器一次只需要很少的数据。
+                    //因此将采集到的数据分成多次传给编码器。
+                    // 由于平面模式的pcm存储方式为：LLLLLLLLLLLLLLLLLLLLLRRRRRRRRRRRRRRRRRRRRR，因此这里合并完传给编码器就行了
                     while(1)
                     {
                         if (leftSize >= ONEAudioSize)
                         {
                             uint8_t * buffer = (uint8_t *)malloc(ONEAudioSize * audio_tgt_channels);
+                            qDebug()<<ONEAudioSize<<audio_tgt_channels<<"___buffer size: "<<ONEAudioSize * audio_tgt_channels<<"audio_buf_L+index size: "<<76800 - index<<"ONEAudioSize: "<<ONEAudioSize;
                             memcpy(buffer, audio_buf_L+index, ONEAudioSize);
 
                             if (audio_tgt_channels >= 2)
@@ -548,45 +517,6 @@ void GetVideoThread::run()
                     }
                 }
             }
-
-//            if (got_frame)
-//            {
-//                if (m_saveVideoFileThread)
-//                {
-//                    int size = av_samples_get_buffer_size(NULL,aCodecCtx->channels, aFrame->nb_samples,aCodecCtx->sample_fmt, 1);
-
-//                    memcpy(audio_buf + audio_buf_size, aFrame->data[0], size);
-//                    audio_buf_size += size;
-
-//                    int index = 0;
-//                    int ONEAudioSize = m_saveVideoFileThread->audio_input_frame_size;//4096
-
-//                    int totalSize = audio_buf_size;
-//                    int leftSize  = audio_buf_size;
-
-//                    while(1)
-//                    {
-//                        if (leftSize >= ONEAudioSize)
-//                        {
-//                            uint8_t * buffer = (uint8_t *)malloc(ONEAudioSize);
-//                            memcpy(buffer, audio_buf+index, ONEAudioSize);
-//                            m_saveVideoFileThread->audioDataQuene_Input((uint8_t*)buffer, ONEAudioSize);
-
-//                            index    += ONEAudioSize;
-//                            leftSize -= ONEAudioSize;
-//                        }
-//                        else
-//                        {
-//                            if (leftSize > 0)
-//                            {
-//                                memcpy(audio_buf, audio_buf+index, leftSize);
-//                            }
-//                            audio_buf_size = leftSize;
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
         }
 
         av_packet_unref(packet);

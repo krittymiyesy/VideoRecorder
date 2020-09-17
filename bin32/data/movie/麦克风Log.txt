@@ -1,0 +1,87 @@
+
+10:45:29: Starting D:\Github\VideoRecorder\bin32\VideoRecorder.exe ...
+"D:/Github/VideoRecorder/bin32"
+AppConfig::WriteLog "\r\n=======================================\r\n=======================================\r\n[App Start...]\r\n\r\n"
+Device Info=============
+========================
+Device Info=============
+========================
+[dshow @ 04378500] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 04378500]  "Integrated Webcam"
+[dshow @ 04378500]     Alternative name "@device_pnp_\\?\usb#vid_0bda&pid_565c&mi_00#6&a611cca&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+[dshow @ 04378500]  "screen-capture-recorder"
+[dshow @ 04378500]     Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{4EA6930A-2C8A-4AE6-A561-56E4B5044439}"
+[dshow @ 04378500] DirectShow audio devices
+[dshow @ 04378500]  "楹﹀厠椋(HUAWEI USB-C HEADSET)"
+[dshow @ 04378500]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{0A9DAF85-AC37-4791-B115-1D511DBD42B4}"
+[dshow @ 04378500]  "virtual-audio-capturer"
+[dshow @ 04378500]     Alternative name "@device_sw_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\{8E14549B-DB61-4309-AFA1-3578E927E935}"
+[dshow @ 04378500]  "楹﹀厠椋庨樀鍒(Realtek(R) Audio)"
+[dshow @ 04378500]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{3355F654-B853-4B24-877F-8A2565C5A87F}"
+[dshow @ 0437ce80] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 0437ce80]  "Integrated Webcam"
+[dshow @ 0437ce80]     Alternative name "@device_pnp_\\?\usb#vid_0bda&pid_565c&mi_00#6&a611cca&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+[dshow @ 0437ce80]  "screen-capture-recorder"
+[dshow @ 0437ce80]     Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{4EA6930A-2C8A-4AE6-A561-56E4B5044439}"
+[dshow @ 0437ce80] DirectShow audio devices
+[dshow @ 0437ce80]  "楹﹀厠椋(HUAWEI USB-C HEADSET)"
+[dshow @ 0437ce80]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{0A9DAF85-AC37-4791-B115-1D511DBD42B4}"
+[dshow @ 0437ce80]  "virtual-audio-capturer"
+[dshow @ 0437ce80]     Alternative name "@device_sw_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\{8E14549B-DB61-4309-AFA1-3578E927E935}"
+[dshow @ 0437ce80]  "楹﹀厠椋庨樀鍒(Realtek(R) Audio)"
+[dshow @ 0437ce80]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{3355F654-B853-4B24-877F-8A2565C5A87F}"
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378audio info:
+audio info: 1411200 1 1411200 44100 2
+27
+SaveVideoFileThread::add_video_stream 0x4404100 0x7a5ebb00 27 27
+333
+SaveVideoFileThread::open_video 333
+aac encoder sample format is: fltp 
+SaveVideoFileThread::open_video 333 0 0
+AppConfig::WriteLog "!!!!!!!!!! Error encoding audio frame: Resource temporarily unavailable ret=-11"
+record stopping...
+record finished!
+record stopping...
+record finished!
+AppConfig::WriteLog "!!!!!!!!!! av_write_trailer ... D:\\\\Github\\\\VideoRecorder\\\\bin32\\\\data\\\\movie/video_2020-09-17 104538.mp4"
+AppConfig::WriteLog "!!!!!!!!!! av_write_trailer finised! D:\\\\Github\\\\VideoRecorder\\\\bin32\\\\data\\\\movie/video_2020-09-17 104538.mp4"
+void RTMPPushThread::run() finished!
+void RTMPPushThread::run() finished! 222
+leaving aero on500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped![dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[dshow @ 04378500] real-time buffer [screen-capture-recorder] [video input] too full or near too full (545% of size: 3041280 [rtbufsize parameter])! frame dropped!
+[libx264 @ 04404100] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 04404100] profile High, level 4.0, 4:2:0, 8-bit
+[libx264 @ 04404100] 264 - core 157 r2935 545de2f - H.264/MPEG-4 AVC codec - Copyleft 2003-2018 - http://www.videolan.org/x264.html - options: cabac=1 ref=1 deblock=1:0:0 analyse=0x3:0x3 me=dia subme=1 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=13 lookahead_threads=13 sliced_threads=1 slices=13 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=1 keyint=50 keyint_min=5 scenecut=40 intra_refresh=0 rc=abr mbtree=0 bitrate=450 ratetol=1.0 qcomp=0.60 qpmin=16 qpmax=31 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'D:\\Github\\VideoRecorder\\bin32\\data\\movie/video_2020-09-17 104538.mp4':
+    Stream #0:0: Video: h264, yuv420p, 1556x876, q=2-31, 450 kb/s, 25 tbn
+    Stream #0:1: Audio: aac (LC), 44100 Hz, stereo, fltp, 128 kb/s
+[libx264 @ 04404100] frame I:4     Avg QP:18.12  size: 68398
+[libx264 @ 04404100] frame P:150   Avg QP:19.71  size:   588
+[libx264 @ 04404100] mb I  I16..4: 82.3%  2.7% 15.1%
+[libx264 @ 04404100] mb P  I16..4:  0.2%  0.0%  0.0%  P16..4:  0.8%  0.0%  0.0%  0.0%  0.0%    skip:99.0%
+[libx264 @ 04404100] final ratefactor: 24.77
+[libx264 @ 04404100] 8x8 transform intra:2.7% inter:8.6%
+[libx264 @ 04404100] coded y,uvDC,uvAC intra: 14.0% 12.7% 11.8% inter: 0.2% 0.2% 0.1%
+[libx264 @ 04404100] i16 v,h,dc,p: 62% 18% 20%  0%
+[libx264 @ 04404100] i8 v,h,dc,ddl,ddr,vr,hd,vl,hu: 29% 18% 27%  3%  4%  2%  4%  1% 11%
+[libx264 @ 04404100] i4 v,h,dc,ddl,ddr,vr,hd,vl,hu: 33% 32% 18%  2%  3%  3%  3%  2%  4%
+[libx264 @ 04404100] i8c dc,h,v,p: 90%  6%  4%  0%
+[libx264 @ 04404100] Weighted P-Frames: Y:0.0% UV:0.0%
+[libx264 @ 04404100] kb/s:469.92
+[aac @ 04402c40] Qavg: 252.630
+[aac @ 04402c40] 2 frames left in the queue on closing
+10:46:17: D:/Github/VideoRecorder/bin32/VideoRecorder.exe exited with code 0

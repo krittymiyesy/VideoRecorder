@@ -9,14 +9,16 @@ ffmpeg version 4.1 Copyright (c) 2000-2018 the FFmpeg developers
   libswscale      5.  3.100 /  5.  3.100
   libswresample   3.  3.100 /  3.  3.100
   libpostproc    55.  3.100 / 55.  3.100
-[dshow @ 009be740] DirectShow video devices (some may be both video and audio devices)
-[dshow @ 009be740]  "Integrated Webcam"
-[dshow @ 009be740]     Alternative name "@device_pnp_\\?\usb#vid_0bda&pid_565c&mi_00#6&a611cca&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
-[dshow @ 009be740]  "screen-capture-recorder"
-[dshow @ 009be740]     Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{4EA6930A-2C8A-4AE6-A561-56E4B5044439}"
-[dshow @ 009be740] DirectShow audio devices
-[dshow @ 009be740]  "麦克风阵列 (Realtek(R) Audio)"
-[dshow @ 009be740]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{3355F654-B853-4B24-877F-8A2565C5A87F}"
-[dshow @ 009be740]  "virtual-audio-capturer"
-[dshow @ 009be740]     Alternative name "@device_sw_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\{8E14549B-DB61-4309-AFA1-3578E927E935}"
+[dshow @ 0433e740] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 0433e740]  "Integrated Webcam"
+[dshow @ 0433e740]     Alternative name "@device_pnp_\\?\usb#vid_0bda&pid_565c&mi_00#6&a611cca&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+[dshow @ 0433e740]  "screen-capture-recorder"
+[dshow @ 0433e740]     Alternative name "@device_sw_{860BB310-5D01-11D0-BD3B-00A0C911CE86}\{4EA6930A-2C8A-4AE6-A561-56E4B5044439}"
+[dshow @ 0433e740] DirectShow audio devices
+[dshow @ 0433e740]  "麦克风 (HUAWEI USB-C HEADSET)"
+[dshow @ 0433e740]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{0A9DAF85-AC37-4791-B115-1D511DBD42B4}"
+[dshow @ 0433e740]  "virtual-audio-capturer"
+[dshow @ 0433e740]     Alternative name "@device_sw_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\{8E14549B-DB61-4309-AFA1-3578E927E935}"
+[dshow @ 0433e740]  "麦克风阵列 (Realtek(R) Audio)"
+[dshow @ 0433e740]     Alternative name "@device_cm_{33D9A762-90C8-11D0-BD43-00A0C911CE86}\wave_{3355F654-B853-4B24-877F-8A2565C5A87F}"
 dummy: Immediate exit requested
