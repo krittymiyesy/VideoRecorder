@@ -6,12 +6,12 @@
 #include <QMouseEvent>
 
 
-#define POINT_SIZE 7  //æ”¹å˜èŒƒå›´çš„å…«ä¸ªç‚¹çš„å¤§å°
+#define POINT_SIZE 7  //¸Ä±ä·¶Î§µÄ°Ë¸öµãµÄ´óĞ¡
 
 
 /***
- ***æ”¹å˜èŒƒå›´æ—¶ï¼Œæ˜¾ç¤ºçš„è¾¹æ¡†ä¸­çš„å…«ä¸ªçº¢ç‚¹
- ***å…¶ä¸­çš„ä¸€ä¸ªç‚¹çš„ç±»
+ ***¸Ä±ä·¶Î§Ê±£¬ÏÔÊ¾µÄ±ß¿òÖĞµÄ°Ë¸öºìµã
+ ***ÆäÖĞµÄÒ»¸öµãµÄÀà
  ***/
 class PushPoint : public QLabel
 {
@@ -20,16 +20,16 @@ class PushPoint : public QLabel
 public:
     explicit PushPoint(QWidget *parent = 0);
     ~PushPoint();
-    enum LocationPoint //æ­¤ç‚¹æ‰€åœ¨çš„ä½ç½®
+    enum LocationPoint //´ËµãËùÔÚµÄÎ»ÖÃ
     {
-        TopLeft = 0, //å·¦ä¸Š
-        TopRight= 1, //å³ä¸Š
-        TopMid  = 2, //ä¸Šä¸­
-        BottomLeft= 3, //å·¦ä¸‹
-        BottomRight= 4, //å³ä¸‹
-        BottomMid= 5, //ä¸‹ä¸­
-        MidLeft= 6, //å·¦ä¸­
-        MidRight= 7 //å³ä¸­
+        TopLeft = 0, //×óÉÏ
+        TopRight= 1, //ÓÒÉÏ
+        TopMid  = 2, //ÉÏÖĞ
+        BottomLeft= 3, //×óÏÂ
+        BottomRight= 4, //ÓÒÏÂ
+        BottomMid= 5, //ÏÂÖĞ
+        MidLeft= 6, //×óÖĞ
+        MidRight= 7 //ÓÒÖĞ
     };
     void setLocation(LocationPoint);
     LocationPoint locPoint(){return location;}
@@ -42,9 +42,9 @@ signals:
 private:
     QPoint dragPosition;
 
-    LocationPoint location; //æ­¤ç‚¹çš„ä½ç½®
+    LocationPoint location; //´ËµãµÄÎ»ÖÃ
 
-    void setMouseCursor(); //è®¾ç½®é¼ æ ‡å½¢çŠ¶
+    void setMouseCursor(); //ÉèÖÃÊó±êĞÎ×´
 };
 
 #endif // PUSHPOINT_H

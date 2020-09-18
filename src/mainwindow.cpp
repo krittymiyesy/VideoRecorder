@@ -113,6 +113,7 @@ void MainWindow::showOut()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    Q_UNUSED(event)
     if (m_screenRecorder)
     {
         m_screenRecorder->stopRecord();

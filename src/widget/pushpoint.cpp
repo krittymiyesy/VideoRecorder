@@ -4,10 +4,10 @@
 PushPoint::PushPoint(QWidget *parent)
 {
     setParent(parent);
-    setWindowFlags(Qt::FramelessWindowHint);  //浣跨獥鍙ｆ爣棰樻爮闅愯棌
+    setWindowFlags(Qt::FramelessWindowHint);  //使窗口标题隐藏
     setMouseTracking(true);
-    QPixmap pixmap = QPixmap(QSize(POINT_SIZE,POINT_SIZE));  //鏋勫缓涓�涓猀Pixmap
-    pixmap.fill(Qt::red);   //鐢ㄧ孩鑹插～鍏呰繖涓猵ixmap
+    QPixmap pixmap = QPixmap(QSize(POINT_SIZE,POINT_SIZE));  //构建一个Pixmap
+    pixmap.fill(Qt::red);   //用红色填充这个Pixmap
     setPixmap(pixmap);
     show();
 }

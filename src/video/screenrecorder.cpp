@@ -33,7 +33,7 @@ ScreenRecorder::~ScreenRecorder()
 
 void ScreenRecorder::setFileName(QString filePath)
 {
-    if (m_saveVideoFileThread != NULL)
+    if (m_saveVideoFileThread != nullptr)
         m_saveVideoFileThread->setFileName(filePath);
 }
 
@@ -63,7 +63,7 @@ ErroCode ScreenRecorder::init(QString videoDevName, bool useVideo, QString audio
     }
 
 
-    if (m_saveVideoFileThread != NULL)
+    if (m_saveVideoFileThread != nullptr)
     {
         m_saveVideoFileThread->setContainsVideo(useVideo);
         m_saveVideoFileThread->setContainsAudio(useAudio);
@@ -74,7 +74,7 @@ ErroCode ScreenRecorder::init(QString videoDevName, bool useVideo, QString audio
 
 void ScreenRecorder::startRecord()
 {
-    if (m_saveVideoFileThread != NULL)
+    if (m_saveVideoFileThread != nullptr)
         m_saveVideoFileThread->startEncode();
 
     if (m_useVideo)
@@ -142,7 +142,7 @@ void ScreenRecorder::stopRecord()
         }
     }
 
-    if (m_saveVideoFileThread != NULL)
+    if (m_saveVideoFileThread != nullptr)
         m_saveVideoFileThread->stopEncode();
 
 }
@@ -151,20 +151,20 @@ void ScreenRecorder::setPicRange(int x,int y,int w,int h)
 {
     m_videoThread->setPicRange(x,y,w,h);
 
-    if (m_saveVideoFileThread != NULL)
+    if (m_saveVideoFileThread != nullptr)
         m_saveVideoFileThread->setWidth(w, h);
 
 }
 
 void ScreenRecorder::setVideoFrameRate(int value)
 {
-    if (m_saveVideoFileThread != NULL)
+    if (m_saveVideoFileThread != nullptr)
         m_saveVideoFileThread->setVideoFrameRate(value);
 }
 
 double ScreenRecorder::getVideoPts()
 {
-    if (m_saveVideoFileThread != NULL)
+    if (m_saveVideoFileThread != nullptr)
     {
         return m_saveVideoFileThread->getVideoPts();
     }
@@ -177,7 +177,7 @@ double ScreenRecorder::getVideoPts()
 
 double ScreenRecorder::getAudioPts()
 {
-    if (m_saveVideoFileThread != NULL)
+    if (m_saveVideoFileThread != nullptr)
     {
         return m_saveVideoFileThread->getAudioPts();
     }

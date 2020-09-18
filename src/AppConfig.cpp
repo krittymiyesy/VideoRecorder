@@ -280,15 +280,15 @@ QString AppConfig::getSizeInfo(qint64 size)
     }
     else if (size > (pee*pee)) //大于1M
     {
-        sprintf(ch,"%dMB",size/pee/pee);
+        sprintf(ch,"%dMB",(int)(size/pee/pee));
     }
     else if (size > pee) //大于1K
     {
-        sprintf(ch,"%dKB",size/pee);
+        sprintf(ch,"%dKB",(int)(size/pee));
     }
     else //小于1KB
     {
-        sprintf(ch,"%dB",size);
+        sprintf(ch,"%dB",(int)size);
     }
 
     QString str = QString(ch);

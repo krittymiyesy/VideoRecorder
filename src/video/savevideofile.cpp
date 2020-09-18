@@ -246,7 +246,6 @@ void SaveVideoFileThread::add_audio_stream(OutputStream *ost, AVFormatContext *o
                                                 enum AVCodecID codec_id)
 {
     AVCodecContext *aCodecCtx;
-    int i;
 
     /* find the video encoder */
     *codec = avcodec_find_encoder(codec_id);
@@ -292,6 +291,7 @@ void SaveVideoFileThread::add_audio_stream(OutputStream *ost, AVFormatContext *o
 
 void SaveVideoFileThread::open_audio(AVFormatContext *oc, AVCodec *codec, OutputStream *ost)
 {
+    Q_UNUSED(oc)
     AVCodecContext *aCodecCtx = ost->enc;
 
     /* open it */
@@ -426,6 +426,7 @@ bool SaveVideoFileThread::write_audio_frame(AVFormatContext *oc, OutputStream *o
 
 void SaveVideoFileThread::close_audio(AVFormatContext *oc, OutputStream *ost)
 {
+    Q_UNUSED(oc)
     avcodec_free_context(&ost->enc);
     av_frame_free(&ost->frame);
 
@@ -580,6 +581,7 @@ static AVFrame *alloc_picture(enum AVPixelFormat pix_fmt, int width, int height)
 
 void SaveVideoFileThread::open_video(AVFormatContext *oc, AVCodec *codec, OutputStream *ost)
 {
+    Q_UNUSED(oc)
     AVCodecContext *c = ost->enc;
 
     // Set Option
@@ -712,6 +714,7 @@ bool SaveVideoFileThread::write_video_frame(AVFormatContext *oc, OutputStream *o
 
 void SaveVideoFileThread::close_video(AVFormatContext *oc, OutputStream *ost)
 {
+    Q_UNUSED(oc)
     avcodec_free_context(&ost->enc);
     av_frame_free(&ost->frame);
 
@@ -781,8 +784,6 @@ while(1)
     AVFormatContext *oc;
     AVCodec *audio_codec, *video_codec;
     int have_video = 0, have_audio = 0;
-
-    int i;
 
     /* allocate the output media context */
     avformat_alloc_output_context2(&oc, NULL, NULL, filename);
@@ -908,7 +909,7 @@ while(1)
         close_audio(oc, &audio_st);
 
     /* free the streams */
-    for(i = 0; i < oc->nb_streams; i++) {
+    for(unsigned int i = 0; i < oc->nb_streams; i++) {
         av_freep(&oc->streams[i]->codec);
         av_freep(&oc->streams[i]);
     }

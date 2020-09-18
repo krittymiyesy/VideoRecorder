@@ -116,7 +116,7 @@ ErroCode GetVideoThread::init(QString videoDevName, bool useVideo, QString audio
     pCodecCtx = NULL;
     if (useVideo)
     {
-        for(i=0; i<pFormatCtx->nb_streams; i++)
+        for(unsigned int i=0; i<pFormatCtx->nb_streams; i++)
             if(pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO)
             {
                 videoindex=i;
@@ -156,7 +156,7 @@ ErroCode GetVideoThread::init(QString videoDevName, bool useVideo, QString audio
     if (useAudio)
     {
 
-        for(i=0; i<pFormatCtx->nb_streams; i++)
+        for(unsigned int i=0; i<pFormatCtx->nb_streams; i++)
         {
             if(pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_AUDIO)
             {
@@ -452,7 +452,8 @@ void GetVideoThread::run()
 
                 }
 
-                int len2 = swr_convert(swrCtx, aFrame_ReSample->data, aFrame_ReSample->nb_samples, (const uint8_t**)aFrame->data, aFrame->nb_samples);
+                swr_convert(swrCtx, aFrame_ReSample->data, aFrame_ReSample->nb_samples, (const uint8_t**)aFrame->data, aFrame->nb_samples);
+                //int len2 = swr_convert(swrCtx, aFrame_ReSample->data, aFrame_ReSample->nb_samples, (const uint8_t**)aFrame->data, aFrame->nb_samples);
 
 //下面这两种方法计算的大小是一样的
 #if 0

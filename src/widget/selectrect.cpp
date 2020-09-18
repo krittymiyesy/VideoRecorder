@@ -38,8 +38,6 @@ void SelectRect::setPointHide()
     {
         locPoint[i]->move(-100,-100);
     }
-
-//    m_showBorderLabel->hide();
 }
 
 void SelectRect::getReadyToSelect()
@@ -86,15 +84,13 @@ void SelectRect::mouseDoubleClickEvent(QMouseEvent *event)
     {
         if (rect.contains(event->pos()))
         {
-            QPixmap pix = QPixmap(this->size());;
+            QPixmap pix = QPixmap(this->size());
             pix.fill(QColor(0,0,0,0));
 
             QPainter painter(&pix);
             painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::RoundCap));
 
             QRect rect = rectangle;
-//            rect.setWidth(rect.width()+1);
-//            rect.setHeight(rect.height()+1);
             painter.drawRect(rect);
             setPixmap(pix);
 
@@ -143,52 +139,6 @@ void SelectRect::mousePressEvent(QMouseEvent * event)
         event->ignore();
     }
 }
-
-//void SelectRect::mouseMoveEvent(QMouseEvent * event)
-//{
-//    RELEASE = false;
-//    if (event->buttons() & Qt::LeftButton)
-//    {
-//        if (FINISHED == false)
-//        {
-//            rect.setWidth(event->x()-rect.x());
-//            rect.setHeight(event->y()-rect.y());
-//            updateRect();
-//        }
-//        else
-//        {
-//            if ( DRAG == true)
-//            {
-//                int width = rect.width();
-//                int height= rect.height();
-
-//                QPoint p =event->globalPos() - dragPosition + zeroPoint;
-//                if(p.x() < 0) p.setX(0);
-//                if(p.y() < 0) p.setY(0);
-//                if((p.x()+width)>this->width()) p.setX(this->width()-width);
-//                if((p.y()+height)>this->height())p.setY(this->height()-height);
-
-//                rect.setTopLeft(p);
-//                rect.setWidth(width);
-//                rect.setHeight(height);
-//                updateRect();
-//            }
-//        }
-//        emit rectChanged(rect);
-//    }
-//    if (FINISHED == true)
-//    {
-//        if (rect.contains(event->pos()))
-//        {
-//            setCursor(Qt::SizeAllCursor);
-//        }
-//        else
-//        {
-//            setCursor(Qt::ArrowCursor);
-//        }
-//    }
-//}
-
 
 void SelectRect::mouseMoveEvent(QMouseEvent * event)
 {
@@ -421,13 +371,6 @@ void SelectRect::updateRect()
     rectangle.setHeight(rect.height()+1);
 
     if (rectangle.x() < 0 || rectangle.y() < 0) rectangle = rect;
-
-//    QPixmap pix = QPixmap(this->size());;
-//    pix.fill(QColor(0,0,0,1));
-//    QPainter painter(&pix);
-//    painter.setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::RoundCap));
-//    painter.drawRect(rectangle);
-//    setPixmap(pix);
 
     layoutLocPoint();
 }
