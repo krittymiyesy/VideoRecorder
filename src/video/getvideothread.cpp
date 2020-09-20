@@ -75,22 +75,22 @@ GetVideoThread::~GetVideoThread()
 
 ErroCode GetVideoThread::init(QString videoDevName, bool useVideo, QString audioDevName, bool useAudio)
 {
-
     AVCodec			*pCodec = NULL;
     AVCodec			*aCodec = NULL;
 
-    AVFormatContext *pFormatCtx2 = avformat_alloc_context();
-    AVDictionary* options = NULL;
-    av_dict_set(&options,"list_devices","true",0);
-    AVInputFormat *iformat = av_find_input_format("dshow");
-    fprintf(stderr,"Device Info=============\n");
-    avformat_open_input(&pFormatCtx2,"video=dummy",iformat,&options);
-    fprintf(stderr,"========================\n");
+    //使用dshow获取相关音视频设备信息并打log，发布版本可删除本段代码
+//    AVFormatContext *pFormatCtx2 = avformat_alloc_context();
+//    AVDictionary* options = NULL;
+//    av_dict_set(&options,"list_devices","true",0);
+//    AVInputFormat *iformat = av_find_input_format("dshow");
+//    avformat_open_input(&pFormatCtx2,"video=dummy",iformat,&options);
+//    fprintf(stderr,"Device Info=============\n");
 
     pFormatCtx = avformat_alloc_context();
 
     AVInputFormat *ifmt = av_find_input_format("dshow");
 
+    //如果判断是初始化视频流，打开视频输入
     if (useAudio)
     {
         QString audioDevOption = QString("audio=%1").arg(audioDevName);
@@ -102,7 +102,7 @@ ErroCode GetVideoThread::init(QString videoDevName, bool useVideo, QString audio
 
     }
 
-
+    //如果判断是初始化音频流，打开音频输入
     if (useVideo)
     {
         QString videoDevOption = QString("video=%1").arg(videoDevName);
@@ -112,6 +112,7 @@ ErroCode GetVideoThread::init(QString videoDevName, bool useVideo, QString audio
         }
     }
 
+    //初始化视频流
     videoindex=-1;
     pCodecCtx = NULL;
     if (useVideo)
@@ -150,9 +151,9 @@ ErroCode GetVideoThread::init(QString videoDevName, bool useVideo, QString audio
         setPicRange(0,0,pCodecCtx->width, pCodecCtx->height);
     }
 
+    //初始化音频流
     audioindex = -1;
     aCodecCtx = NULL;
-
     if (useAudio)
     {
 
@@ -200,8 +201,8 @@ ErroCode GetVideoThread::init(QString videoDevName, bool useVideo, QString audio
         //输入的声道布局
         int in_ch_layout;
 
-        /// 新版ffmpeg编码aac只支持输入AV_SAMPLE_FMT_FLTP的数据
-        /// 强制将音频重采样成44100 双声道  AV_SAMPLE_FMT_FLTP
+        // 新版ffmpeg编码aac只支持输入AV_SAMPLE_FMT_FLTP的数据
+        // 强制将音频重采样成44100 双声道  AV_SAMPLE_FMT_FLTP
         //重采样设置选项----------------
         //输入的采样格式
         in_sample_fmt = aCodecCtx->sample_fmt;
@@ -341,7 +342,8 @@ void GetVideoThread::run()
         int numBytes = avpicture_get_size(AV_PIX_FMT_YUV420P, pCodecCtx->width,pCodecCtx->height);
         out_buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
         avpicture_fill((AVPicture *) pFrameYUV, out_buffer, AV_PIX_FMT_YUV420P,pCodecCtx->width, pCodecCtx->height);
-        img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height, AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+        img_convert_ctx = sws_getContext(pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height, \
+                                         AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
 
         y_size = pCodecCtx->width * pCodecCtx->height;
         yuvSize = pic_w * pic_h;
@@ -437,6 +439,7 @@ void GetVideoThread::run()
                     aFrame_ReSample = av_frame_alloc();
 
                     int nb_samples = av_rescale_rnd(swr_get_delay(swrCtx, out_sample_rate) + aFrame->nb_samples, out_sample_rate, in_sample_rate, AV_ROUND_UP);
+                    qDebug()<<"nb_samples: "<<__FUNCTION__<<__LINE__<<nb_samples;
 
                     aFrame_ReSample->format = out_sample_fmt;
                     aFrame_ReSample->channel_layout = out_ch_layout;
@@ -451,8 +454,10 @@ void GetVideoThread::run()
                     }
 
                 }
-
-                swr_convert(swrCtx, aFrame_ReSample->data, aFrame_ReSample->nb_samples, (const uint8_t**)aFrame->data, aFrame->nb_samples);
+                //函数原型int swr_convert(struct SwrContext *s, uint8_t **out, int out_count, const uint8_t **in , int in_count);
+                //因为扬声器和麦克风设备的默认采样率不同，需要调整out_count和in_count的大小保持一致。然后设置较低的采样率44100，这样由48000到44100也不会出现声音的失真，反向设置则需重新调整。
+                swr_convert(swrCtx, aFrame_ReSample->data, aFrame_ReSample->nb_samples, (const uint8_t**)aFrame->data, aFrame_ReSample->nb_samples);
+                qDebug()<<"aFrame_ReSample->nb_samples: "<<aFrame_ReSample->nb_samples<<"aFrame->nb_samples: "<<aFrame->nb_samples;
                 //int len2 = swr_convert(swrCtx, aFrame_ReSample->data, aFrame_ReSample->nb_samples, (const uint8_t**)aFrame->data, aFrame->nb_samples);
 
 //下面这两种方法计算的大小是一样的

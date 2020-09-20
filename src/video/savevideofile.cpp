@@ -302,7 +302,7 @@ void SaveVideoFileThread::open_audio(AVFormatContext *oc, AVCodec *codec, Output
     }
 
     mONEFrameSize = av_samples_get_buffer_size(NULL, aCodecCtx->channels, aCodecCtx->frame_size, aCodecCtx->sample_fmt, 1);
-    qDebug()<<"++++++++++++++++++++++++"<<"mONEFrameSize:"<<mONEFrameSize<<"aCodecCtx->channels: "<<aCodecCtx->channels<<"aCodecCtx->frame_size: "<<aCodecCtx->frame_size<<"aCodecCtx->sample_fmt:"<<aCodecCtx->sample_fmt;
+    qDebug()<<__FUNCTION__<<__LINE__<<"++++++++++++++++++++++++"<<"mONEFrameSize:"<<mONEFrameSize<<"aCodecCtx->channels: "<<aCodecCtx->channels<<"aCodecCtx->frame_size: "<<aCodecCtx->frame_size<<"aCodecCtx->sample_fmt:"<<aCodecCtx->sample_fmt;
     ost->frame           = av_frame_alloc();
     ost->frameBuffer     = (uint8_t *)av_malloc(mONEFrameSize);
     ost->frameBufferSize = mONEFrameSize;
